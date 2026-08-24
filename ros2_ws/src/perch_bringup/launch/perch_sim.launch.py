@@ -63,4 +63,5 @@ def generate_launch_description():
         Node(package='perch_vision', executable='landing_target_detector', name='landing_target_detector'),
 
         Node(package='perch_ugv_nav', executable='landing_platform_coordinator', name='landing_platform_coordinator'),
+        Node(package='perch_bringup', executable='vehicle_marker_viz', name='vehicle_marker_viz'),
     ])

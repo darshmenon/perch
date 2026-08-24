@@ -14,6 +14,7 @@ setup(
         ('share/' + package_name, ['package.xml']),
         (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
         (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
+        (os.path.join('share', package_name, 'rviz'), glob('rviz/*.rviz')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -22,4 +23,9 @@ setup(
     description='Top-level launch files bringing up the full PERCH simulation: UAV, UGV, and world',
     license='MIT',
     tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'vehicle_marker_viz = perch_bringup.vehicle_marker_viz:main',
+        ],
+    },
 )

@@ -1,0 +1,43 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Enabled: true
+      Name: Ground Grid
+      Plane: XY
+      Reference Frame: odom
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: UAV and UGV
+      Topic:
+        Value: /perch/vehicle_markers
+      Value: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Name: UAV Downward Camera
+      Topic:
+        Value: /uav/camera/image_raw
+      Value: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Name: UAV Depth Camera
+      Topic:
+        Value: /uav/camera/depth/image_raw
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: odom
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+  Value: true
+Window Geometry:
+  Height: 760
+  Width: 1100
