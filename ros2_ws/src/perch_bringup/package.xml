@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>perch_bringup</name>
+  <version>0.0.1</version>
+  <description>Top-level launch files bringing up the full PERCH simulation: UAV, UGV, and world</description>
+  <maintainer email="darshmenon02@gmail.com">darshmenon</maintainer>
+  <license>MIT</license>
+
+  <exec_depend>perch_uav_control</exec_depend>
+  <exec_depend>perch_ugv_nav</exec_depend>
+  <exec_depend>perch_vision</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

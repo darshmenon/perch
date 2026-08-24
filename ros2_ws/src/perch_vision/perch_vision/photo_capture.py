@@ -1,0 +1,19 @@
+import rclpy
+from rclpy.node import Node
+
+
+class PhotoCapture(Node):
+    def __init__(self):
+        super().__init__('photo_capture')
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = PhotoCapture()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
