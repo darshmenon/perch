@@ -183,12 +183,6 @@
     </include>
 
     <include>
-      <name>lake_house</name>
-      <pose>-18 12 0 0 0 0.25</pose>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Lake House/3</uri>
-    </include>
-
-    <include>
       <name>barrier_0</name>
       <pose>10 5.9 0 0 0 0</pose>
       <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Jersey Barrier/6</uri>

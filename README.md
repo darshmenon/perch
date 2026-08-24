@@ -2,6 +2,9 @@
 
 Platform for Enhanced Reconnaissance & Cooperative Homing.
 
+![Gazebo Sim: perch_ugv on the operations pad, depot building, road, and trees](docs/images/gazebo_screenshot.png)
+![RViz: UAV downward/depth camera feeds alongside the UAV+UGV 3D view](docs/images/rviz_screenshot.png)
+
 A simulated quadcopter UAV that flies an autonomous survey mission (RGB photo
 capture, depth-based coverage mapping, payload drop), and a UGV ground rover
 that patrols independently and serves as a mobile landing platform the UAV
