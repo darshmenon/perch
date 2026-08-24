@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='darshmenon',
     maintainer_email='darshmenon02@gmail.com',
-    description='PX4 offboard control, survey missions, and landing behavior for the PERCH UAV',
+    description='Velocity offboard control, survey missions, payload drop, and landing behavior for the PERCH UAV',
     license='MIT',
     tests_require=['pytest'],
     entry_points={
@@ -23,6 +23,7 @@ setup(
             'offboard_control = perch_uav_control.offboard_control:main',
             'survey_mission = perch_uav_control.survey_mission:main',
             'precision_landing = perch_uav_control.precision_landing:main',
+            'payload_drop = perch_uav_control.payload_drop:main',
         ],
     },
 )
