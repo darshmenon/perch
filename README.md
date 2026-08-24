@@ -13,8 +13,9 @@ detects (ArUco marker) and lands on.
 bridge, and every node, and runs the full mission unattended: takeoff, lawnmower
 survey with periodic photo capture and live coverage-heatmap generation, a
 mid-survey payload drop, then handoff to vision-based precision landing on the
-UGV's deck marker while the UGV patrols (and holds position once a landing is
-in progress).
+UGV's deck marker while the UGV keeps patrolling (slowed, not stopped) —
+the UAV leads the marker using the UGV's velocity and lands on the moving
+platform.
 
 ## Scope (v1)
 

@@ -24,9 +24,11 @@ class OffboardControl(Node):
         super().__init__('offboard_control')
         self.current_position = None
         self.goal_position = None
+        self.goal_velocity = (0.0, 0.0)
 
         self.create_subscription(Odometry, 'uav/odom', self.on_odom, 10)
         self.create_subscription(PoseStamped, 'uav/goal_pose', self.on_goal, 10)
+        self.create_subscription(Twist, 'uav/goal_velocity', self.on_goal_velocity, 10)
 
         self.cmd_pub = self.create_publisher(Twist, 'uav/cmd_vel', 10)
         self.at_goal_pub = self.create_publisher(Bool, 'uav/at_goal', 10)
@@ -41,6 +43,11 @@ class OffboardControl(Node):
         p = msg.pose.position
         self.goal_position = (p.x, p.y, p.z)
 
+    def on_goal_velocity(self, msg):
+        # Feedforward for tracking a moving goal (e.g. the UGV landing platform)
+        # without the steady-state lag a pure proportional controller would have.
+        self.goal_velocity = (msg.linear.x, msg.linear.y)
+
     def control_loop(self):
         if self.current_position is None or self.goal_position is None:
             return
@@ -52,8 +59,8 @@ class OffboardControl(Node):
 
         twist = Twist()
         if distance > POSITION_TOLERANCE:
-            twist.linear.x = self._clamp(PROPORTIONAL_GAIN * dx)
-            twist.linear.y = self._clamp(PROPORTIONAL_GAIN * dy)
+            twist.linear.x = self._clamp(PROPORTIONAL_GAIN * dx + self.goal_velocity[0])
+            twist.linear.y = self._clamp(PROPORTIONAL_GAIN * dy + self.goal_velocity[1])
             twist.linear.z = self._clamp(PROPORTIONAL_GAIN * dz)
         self.cmd_pub.publish(twist)
         self.at_goal_pub.publish(Bool(data=distance <= POSITION_TOLERANCE))

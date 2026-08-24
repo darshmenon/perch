@@ -26,9 +26,10 @@
 ## Milestone 4 — Cooperative landing — done
 - [x] `landing_target_detector`: UAV-side ArUco detection + pinhole
       pixel-to-world offset, publishes `LandingTarget`
-- [x] `precision_landing`: descends toward detected marker, disarms on
-      touchdown
-- [x] `landing_platform_coordinator` holds position while `perch/landing_in_progress`
+- [x] `precision_landing`: tracks the detected marker with a velocity-led
+      goal, descends once horizontally aligned, disarms on touchdown
+- [x] `landing_platform_coordinator` keeps patrolling (slowed) during
+      landing instead of stopping — UAV lands on a moving platform
 
 ## Milestone 5 — Polish
 - [x] Single `perch_sim.launch.py` bringing up world + bridge + UAV + UGV + all nodes

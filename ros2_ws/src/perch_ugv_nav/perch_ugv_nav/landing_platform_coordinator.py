@@ -7,6 +7,7 @@ from nav_msgs.msg import Odometry
 from std_msgs.msg import Bool
 
 PATROL_WAYPOINTS = [(5.0, 4.0), (10.0, 4.0), (10.0, -4.0), (5.0, -4.0)]
+LANDING_SPEED_SCALE = 0.5
 WAYPOINT_TOLERANCE = 0.6
 MAX_LINEAR_SPEED = 0.6
 MAX_ANGULAR_SPEED = 0.8
@@ -42,10 +43,6 @@ class LandingPlatformCoordinator(Node):
         if self.pose is None:
             return
 
-        if self.landing_in_progress:
-            self.cmd_pub.publish(Twist())
-            return
-
         goal_x, goal_y = PATROL_WAYPOINTS[self.waypoint_index]
         x, y, yaw = self.pose
         dx, dy = goal_x - x, goal_y - y
@@ -58,9 +55,14 @@ class LandingPlatformCoordinator(Node):
         heading_error = math.atan2(dy, dx) - yaw
         heading_error = math.atan2(math.sin(heading_error), math.cos(heading_error))
 
+        # Keep patrolling (rather than stopping) once a landing starts, so the UAV
+        # has to track and land on a genuinely moving platform. Slow down so the
+        # UAV's proportional + velocity-feedforward tracking can keep up.
+        speed_scale = LANDING_SPEED_SCALE if self.landing_in_progress else 1.0
+
         twist = Twist()
         twist.angular.z = max(-MAX_ANGULAR_SPEED, min(MAX_ANGULAR_SPEED, ANGULAR_GAIN * heading_error))
-        twist.linear.x = max(0.0, MAX_LINEAR_SPEED * math.cos(heading_error))
+        twist.linear.x = max(0.0, speed_scale * MAX_LINEAR_SPEED * math.cos(heading_error))
         self.cmd_pub.publish(twist)
 
 
