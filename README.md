@@ -2,37 +2,77 @@
 
 Platform for Enhanced Reconnaissance & Cooperative Homing.
 
-A simulated quadcopter UAV that flies autonomous surveillance/survey missions
-(photo capture + depth-based coverage mapping, optional payload drop), and a
-UGV ground rover that navigates/maps independently and serves as a mobile
-landing platform the UAV can detect and land on.
+A simulated quadcopter UAV that flies an autonomous survey mission (RGB photo
+capture, depth-based coverage mapping, payload drop), and a UGV ground rover
+that patrols independently and serves as a mobile landing platform the UAV
+detects (ArUco marker) and lands on.
+
+## Status: working end-to-end in sim
+
+`ros2 launch perch_bringup perch_sim.launch.py` brings up Gazebo, the ROS2/Gazebo
+bridge, and every node, and runs the full mission unattended: takeoff, lawnmower
+survey with periodic photo capture and live coverage-heatmap generation, a
+mid-survey payload drop, then handoff to vision-based precision landing on the
+UGV's deck marker while the UGV patrols (and holds position once a landing is
+in progress).
 
 ## Scope (v1)
 
-- Simulation only: Gazebo + PX4 SITL + ROS2.
-- UAV: PX4 offboard control via ROS2, waypoint survey missions, RGB camera
-  for photo capture, depth camera for coverage/obstacle mapping, payload
-  drop mechanism (simulated).
-- UGV: independent nav2-based navigation/SLAM, carries a visual landing
-  marker (AprilTag) on its deck.
-- Landing: UAV detects the UGV's marker via onboard camera and performs a
-  precision landing on the moving/stationary platform.
+- Simulation only, built entirely on tools already available locally (Gazebo
+  Harmonic + ROS2 Humble + OpenCV) — no PX4 SITL, no extra apt installs.
+- UAV: velocity offboard control (Gazebo's `MulticopterVelocityControl`),
+  lawnmower survey mission, RGB photo capture, depth-based coverage heatmap,
+  payload drop via a detachable-joint plugin, ArUco-based precision landing.
+- UGV: diff-drive rover with a lidar and an ArUco (`DICT_4X4_50`, id 0) deck
+  marker, rectangular patrol controller, holds position during a landing.
 
 ## Stack
 
-- ROS2 (Humble or Jazzy)
-- PX4 Autopilot (SITL) + MAVSDK/ROS2 offboard control
-- Gazebo (Harmonic/Garden, matching PX4 SITL support)
-- nav2 for UGV navigation
-- AprilTag (apriltag_ros) for vision-based landing target detection
+- ROS2 Humble
+- Gazebo Harmonic (`gz sim`), via `ros_gz_bridge`
+- OpenCV `cv2.aruco` for landing-marker detection (no `apriltag_ros` needed)
+- nav2 / slam_toolbox are installed and reserved for a future upgrade from the
+  current simple patrol controller to full SLAM-based UGV navigation
+
+### Why not PX4?
+
+PX4 SITL needs several apt packages (`genromfs`, `astyle`, `gperf`, `flex`,
+`bison`, ...) that require root, which wasn't available in this environment.
+Gazebo's built-in `MulticopterVelocityControl`/`MulticopterMotorModel` plugins
+give the same body-frame velocity control PX4 offboard mode would, using only
+what's already installed. Swapping in real PX4 SITL later is a drop-in
+replacement for `offboard_control.py`'s command topic, not a rearchitecture.
+
+## Running it
+
+```bash
+scripts/setup_sim_assets.sh          # one-time: downloads + patches the X3 UAV model with cameras
+cd ros2_ws && colcon build --symlink-install && source install/setup.bash
+ros2 launch perch_bringup perch_sim.launch.py
+```
+
+Photos land in `~/perch_captures/photos/`, the coverage heatmap is written to
+`~/perch_captures/coverage_heatmap.png` (refreshed every 5s).
+
+To fly/drive manually instead, `scripts/run_sim.sh` launches just the Gazebo
+world (see the comments in `sim/worlds/perch_world.sdf` for raw `gz topic`
+teleop commands).
 
 ## Repo layout
 
-- `ros2_ws/src/` — ROS2 packages (UAV control, UGV nav, vision, bringup, msgs)
-- `sim/` — Gazebo worlds and models
-- `scripts/` — setup/build/launch helper scripts
-- `docs/` — architecture notes and mission design
+- `ros2_ws/src/` — ROS2 packages:
+  - `perch_msgs` — `LandingTarget` msg, `DropPayload` srv
+  - `perch_uav_control` — offboard velocity control, survey mission, payload
+    drop, precision landing
+  - `perch_vision` — photo capture, coverage mapper, ArUco landing detector
+  - `perch_ugv_nav` — UGV patrol / landing-platform coordinator
+  - `perch_bringup` — bridge config + top-level launch file
+- `sim/worlds/perch_world.sdf` — the combined UAV + UGV + payload world
+- `sim/models/perch_ugv/` — UGV model (diff-drive, lidar, ArUco deck marker)
+- `scripts/` — asset setup and sim launch helpers
+- `docs/` — roadmap and architecture notes
 
-## Status
+## Roadmap
 
-Early scaffolding. See `docs/roadmap.md` for planned milestones.
+See `docs/roadmap.md` — Milestones 1 and 2 are done; UGV SLAM/nav2 (Milestone 3)
+is the next real piece of work.
