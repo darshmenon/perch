@@ -34,7 +34,7 @@ class SurveyMission(Node):
         self.goal_pub = self.create_publisher(PoseStamped, 'uav/goal_pose', 10)
         self.mode_pub = self.create_publisher(String, 'uav/mode', 10)
         self.create_subscription(Bool, 'uav/at_goal', self.on_at_goal, 10)
-        self.create_subscription(Odometry, 'ugv/odom', self.on_ugv_odom, 10)
+        self.create_subscription(Odometry, 'odom', self.on_ugv_odom, 10)
 
         self.drop_client = self.create_client(DropPayload, 'drop_payload')
 

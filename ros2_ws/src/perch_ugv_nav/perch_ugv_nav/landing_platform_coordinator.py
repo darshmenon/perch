@@ -25,9 +25,9 @@ class LandingPlatformCoordinator(Node):
         self.pose = None
         self.landing_in_progress = False
 
-        self.create_subscription(Odometry, 'ugv/odom', self.on_odom, 10)
+        self.create_subscription(Odometry, 'odom', self.on_odom, 10)
         self.create_subscription(Bool, 'perch/landing_in_progress', self.on_landing_status, 10)
-        self.cmd_pub = self.create_publisher(Twist, 'ugv/cmd_vel', 10)
+        self.cmd_pub = self.create_publisher(Twist, 'cmd_vel', 10)
 
         self.create_timer(1.0 / 10.0, self.control_loop)
 

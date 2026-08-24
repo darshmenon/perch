@@ -40,19 +40,22 @@
   gz_type_name: "gz.msgs.Image"
   direction: GZ_TO_ROS
 
-- ros_topic_name: "ugv/cmd_vel"
+# Unnamespaced (cmd_vel/odom/scan/base_link) to match rosnav_bot's default
+# nav2_params.yaml/slam_params.yaml expectations directly - see
+# docs/roadmap.md Milestone 3 for the planned rosnav_bot integration.
+- ros_topic_name: "cmd_vel"
   gz_topic_name: "/model/perch_ugv/cmd_vel"
   ros_type_name: "geometry_msgs/msg/Twist"
   gz_type_name: "gz.msgs.Twist"
   direction: ROS_TO_GZ
 
-- ros_topic_name: "ugv/odom"
+- ros_topic_name: "odom"
   gz_topic_name: "/model/perch_ugv/odometry"
   ros_type_name: "nav_msgs/msg/Odometry"
   gz_type_name: "gz.msgs.Odometry"
   direction: GZ_TO_ROS
 
-- ros_topic_name: "ugv/scan"
+- ros_topic_name: "scan"
   gz_topic_name: "/scan"
   ros_type_name: "sensor_msgs/msg/LaserScan"
   gz_type_name: "gz.msgs.LaserScan"

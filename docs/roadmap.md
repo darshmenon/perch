@@ -20,8 +20,26 @@
 - [x] Rectangular patrol controller (`landing_platform_coordinator`)
 - [x] ArUco marker mounted on UGV deck (landing marker)
 - [ ] Upgrade patrol controller to real SLAM (slam_toolbox) + nav2
-      exploration — nav2_bringup/slam_toolbox are installed but not wired up
-      yet
+      exploration by reusing `rosnav_bot` (github.com/darshmenon/rosnav) as an
+      external dependency instead of writing nav2/SLAM tuning from scratch:
+  - [x] `perch_ugv`'s `DiffDrive` plugin now publishes `odom`/`base_link`
+        frames and the ROS/Gazebo bridge (`bridge.yaml`) exposes
+        unnamespaced `scan`/`odom`/`cmd_vel`, matching `rosnav_bot`'s default
+        `nav2_params.yaml`/`slam_params.yaml` (`scan_topic: scan`,
+        `odom_topic: /odom`, `base_frame_id: base_link`) with no remapping
+        needed
+  - [ ] Clone `rosnav_bot` alongside `perch/ros2_ws/src` (separate repo, not
+        vendored) and `colcon build` it in the same workspace
+  - [ ] Launch its `slam_nav.launch.py` (or `nav2.launch.py` against a
+        pre-built map) instead of/alongside `perch_bringup`'s launch, pointed
+        at the already-running perch world
+  - [ ] Retire `landing_platform_coordinator`'s hardcoded rectangular
+        patrol in favor of nav2 goal poses (frontier exploration via
+        `explore_lite`/`rrt_explore`, both already in `rosnav_bot`) — the
+        "hold during landing" behavior becomes a nav2 goal cancel/pause
+        instead of a raw `Twist` override
+  - [ ] Not yet validated end-to-end: no combined perch+rosnav_bot launch
+        has actually been run in sim
 
 ## Milestone 4 — Cooperative landing — done
 - [x] `landing_target_detector`: UAV-side ArUco detection + pinhole

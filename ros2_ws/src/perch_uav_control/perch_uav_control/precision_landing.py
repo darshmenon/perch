@@ -33,7 +33,7 @@ class PrecisionLanding(Node):
         self.create_subscription(String, 'uav/mode', self.on_mode, 10)
         self.create_subscription(LandingTarget, 'perch/landing_target', self.on_target, 10)
         self.create_subscription(Odometry, 'uav/odom', self.on_odom, 10)
-        self.create_subscription(Odometry, 'ugv/odom', self.on_ugv_odom, 10)
+        self.create_subscription(Odometry, 'odom', self.on_ugv_odom, 10)
 
         self.goal_pub = self.create_publisher(PoseStamped, 'uav/goal_pose', 10)
         self.velocity_ff_pub = self.create_publisher(Twist, 'uav/goal_velocity', 10)
