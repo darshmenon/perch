@@ -10,6 +10,9 @@
   <depend>nav2_bringup</depend>
   <depend>slam_toolbox</depend>
   <depend>perch_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
 
   <export>
     <build_type>ament_python</build_type>
