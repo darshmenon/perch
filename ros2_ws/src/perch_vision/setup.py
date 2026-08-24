@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='darshmenon',
     maintainer_email='darshmenon02@gmail.com',
-    description='Photo capture, depth-based coverage mapping, and AprilTag landing target detection for PERCH',
+    description='Photo capture, depth-based coverage mapping, and ArUco landing target detection for PERCH',
     license='MIT',
     tests_require=['pytest'],
     entry_points={

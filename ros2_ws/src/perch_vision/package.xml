@@ -2,15 +2,17 @@
 <package format="3">
   <name>perch_vision</name>
   <version>0.0.1</version>
-  <description>Photo capture, depth-based coverage mapping, and AprilTag landing target detection for PERCH</description>
+  <description>Photo capture, depth-based coverage mapping, and ArUco landing target detection for PERCH</description>
   <maintainer email="darshmenon02@gmail.com">darshmenon</maintainer>
   <license>MIT</license>
 
   <depend>rclpy</depend>
   <depend>sensor_msgs</depend>
+  <depend>nav_msgs</depend>
   <depend>cv_bridge</depend>
-  <depend>apriltag_ros</depend>
   <depend>perch_msgs</depend>
+  <depend>python3-opencv</depend>
+  <depend>python3-numpy</depend>
 
   <export>
     <build_type>ament_python</build_type>
