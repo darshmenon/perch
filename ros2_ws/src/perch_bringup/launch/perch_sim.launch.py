@@ -2,7 +2,9 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, SetEnvironmentVariable
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, SetEnvironmentVariable
+from launch.conditions import IfCondition, UnlessCondition
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 # realpath resolves the --symlink-install symlink back to the source tree
@@ -18,7 +20,15 @@ BRIDGE_CONFIG = os.path.join(
 
 
 def generate_launch_description():
+    headless = LaunchConfiguration('headless')
+
     return LaunchDescription([
+        DeclareLaunchArgument(
+            'headless',
+            default_value='false',
+            description='Run Gazebo server-only without the GUI',
+        ),
+
         SetEnvironmentVariable(
             'GZ_SIM_RESOURCE_PATH',
             MODELS_PATH + ':' + os.environ.get('GZ_SIM_RESOURCE_PATH', '')),
@@ -26,6 +36,13 @@ def generate_launch_description():
         ExecuteProcess(
             cmd=['gz', 'sim', '-r', WORLD_PATH],
             output='screen',
+            condition=UnlessCondition(headless),
+        ),
+
+        ExecuteProcess(
+            cmd=['gz', 'sim', '-s', '-r', WORLD_PATH],
+            output='screen',
+            condition=IfCondition(headless),
         ),
 
         Node(
