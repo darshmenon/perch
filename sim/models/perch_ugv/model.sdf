@@ -21,10 +21,105 @@
           </box>
         </geometry>
         <material>
-          <ambient>0.5 0.5 1.0 1</ambient>
-          <diffuse>0.5 0.5 1.0 1</diffuse>
-          <specular>0.0 0.0 1.0 1</specular>
+          <ambient>0.03 0.035 0.04 1</ambient>
+          <diffuse>0.06 0.07 0.075 1</diffuse>
+          <specular>0.12 0.12 0.13 1</specular>
         </material>
+      </visual>
+      <visual name="front_bumper">
+        <pose>1.02 0 -0.08 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.08 1.1 0.22</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.01 0.012 0.014 1</ambient>
+          <diffuse>0.015 0.018 0.02 1</diffuse>
+        </material>
+      </visual>
+      <visual name="rear_bumper">
+        <pose>-1.02 0 -0.08 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.08 1.1 0.22</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.01 0.012 0.014 1</ambient>
+          <diffuse>0.015 0.018 0.02 1</diffuse>
+        </material>
+      </visual>
+      <visual name="landing_deck">
+        <pose>-0.02 0 0.295 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.65 0.9 0.05</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.11 0.12 0.125 1</ambient>
+          <diffuse>0.14 0.15 0.155 1</diffuse>
+          <specular>0.2 0.2 0.18 1</specular>
+        </material>
+      </visual>
+      <visual name="front_light_bar">
+        <pose>1.065 0 -0.02 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.62 0.05</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.2 0.85 1 1</ambient>
+          <diffuse>0.2 0.85 1 1</diffuse>
+          <emissive>0.1 0.6 0.9 1</emissive>
+        </material>
+      </visual>
+      <visual name="rear_left_light">
+        <pose>-1.065 0.36 -0.02 0 0 0</pose>
+        <geometry><box><size>0.02 0.12 0.06</size></box></geometry>
+        <material><ambient>1 0.05 0.03 1</ambient><diffuse>1 0.05 0.03 1</diffuse><emissive>0.55 0.02 0.01 1</emissive></material>
+      </visual>
+      <visual name="rear_right_light">
+        <pose>-1.065 -0.36 -0.02 0 0 0</pose>
+        <geometry><box><size>0.02 0.12 0.06</size></box></geometry>
+        <material><ambient>1 0.05 0.03 1</ambient><diffuse>1 0.05 0.03 1</diffuse><emissive>0.55 0.02 0.01 1</emissive></material>
+      </visual>
+      <visual name="left_rail">
+        <pose>-0.05 0.5 0.45 0 1.5707 0</pose>
+        <geometry><cylinder><radius>0.025</radius><length>1.55</length></cylinder></geometry>
+        <material><ambient>0.02 0.02 0.022 1</ambient><diffuse>0.02 0.02 0.022 1</diffuse></material>
+      </visual>
+      <visual name="right_rail">
+        <pose>-0.05 -0.5 0.45 0 1.5707 0</pose>
+        <geometry><cylinder><radius>0.025</radius><length>1.55</length></cylinder></geometry>
+        <material><ambient>0.02 0.02 0.022 1</ambient><diffuse>0.02 0.02 0.022 1</diffuse></material>
+      </visual>
+      <visual name="lidar_puck">
+        <pose>0.72 0 0.54 0 0 0</pose>
+        <geometry><cylinder><radius>0.11</radius><length>0.08</length></cylinder></geometry>
+        <material><ambient>0.85 0.88 0.86 1</ambient><diffuse>0.85 0.88 0.86 1</diffuse></material>
+      </visual>
+      <visual name="camera_mast">
+        <pose>0.52 -0.35 0.58 0 0 0</pose>
+        <geometry><cylinder><radius>0.025</radius><length>0.45</length></cylinder></geometry>
+        <material><ambient>0.02 0.02 0.022 1</ambient><diffuse>0.02 0.02 0.022 1</diffuse></material>
+      </visual>
+      <visual name="camera_head">
+        <pose>0.52 -0.35 0.84 0 0 0</pose>
+        <geometry><box><size>0.14 0.12 0.1</size></box></geometry>
+        <material><ambient>0.08 0.08 0.085 1</ambient><diffuse>0.08 0.08 0.085 1</diffuse></material>
+      </visual>
+      <visual name="antenna_0">
+        <pose>-0.62 0.33 0.68 0 0 0</pose>
+        <geometry><cylinder><radius>0.012</radius><length>0.7</length></cylinder></geometry>
+        <material><ambient>0.01 0.01 0.012 1</ambient><diffuse>0.01 0.01 0.012 1</diffuse></material>
+      </visual>
+      <visual name="antenna_1">
+        <pose>-0.72 -0.31 0.62 0 0.18 0</pose>
+        <geometry><cylinder><radius>0.01</radius><length>0.55</length></cylinder></geometry>
+        <material><ambient>0.01 0.01 0.012 1</ambient><diffuse>0.01 0.01 0.012 1</diffuse></material>
       </visual>
       <collision name="collision">
         <geometry>
@@ -73,7 +168,7 @@
       <visual name="visual">
         <geometry>
           <box>
-            <size>0.4 0.4 0.01</size>
+            <size>0.7 0.7 0.012</size>
           </box>
         </geometry>
         <material>
@@ -116,6 +211,19 @@
           <ambient>0.2 0.2 0.2 1</ambient>
           <diffuse>0.2 0.2 0.2 1</diffuse>
           <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+      <visual name="tire_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.32</radius>
+            <length>0.22</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.015 0.015 0.014 1</ambient>
+          <diffuse>0.02 0.02 0.018 1</diffuse>
+          <specular>0.02 0.02 0.02 1</specular>
         </material>
       </visual>
       <collision name="collision">
@@ -161,6 +269,19 @@
           <ambient>0.2 0.2 0.2 1</ambient>
           <diffuse>0.2 0.2 0.2 1</diffuse>
           <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+      <visual name="tire_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.32</radius>
+            <length>0.22</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.015 0.015 0.014 1</ambient>
+          <diffuse>0.02 0.02 0.018 1</diffuse>
+          <specular>0.02 0.02 0.02 1</specular>
         </material>
       </visual>
       <collision name="collision">
